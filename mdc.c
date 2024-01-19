@@ -14,7 +14,7 @@ int mdc(int a, int b){
 int main(){
     int a,b;
 
-    scanf("%d%d",&a,&b);
+    scanf("%d %d",&a,&b);
     printf("mdc(a,b) = [%d]\n",mdc(a,b));
     return 0;
 }
