@@ -19,7 +19,7 @@ int max(int vet[], int tamanho,int pos_maior){
 
 int main(){
     int A[5] = {5,4,7,2,1};
-
+    
     printf("MAIOR = [%d]",max(A,5,0));
     return 0;
 
