@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include "ordenacao.h"
 
+// EFICIENTES:
 
 void merge(int *V,int aux_ordenado[],int esq,int meio, int dir){
     int esq_fim = meio-1;  // [ini_left] ... [esq_fim]  Topo é inileft
@@ -60,16 +61,89 @@ void m_sort(int* v, int n){
     mergeSort(v,aux,0,n-1);
 }
 
+// SIMPLES:
 
-int main(){
-    int vet[6] = {6,5,4,3,2,1};
-    int i;
-    m_sort(vet,6); //passa-se pos de ultimo elemento   
-    for (i = 0; i < 6; i++)
+void bubbleSort(int V[], int tam)
+{
+    int i, j, temp;
+    for (i = 0; i < tam - 1; i++)
     {
-        printf("[%d] ",vet[i]);
-    }
-    printf("\n");
+        int ver = 0;
+        for (j = 0; j < tam - i - 1; j++)
+        {
+            if (V[j] > V[j + 1])
+            {
+                temp = V[j];
+                V[j] = V[j + 1];
+                V[j + 1] = temp;
 
-    return 0;
+                ver = 1;
+            }
+        }
+        if (ver == 0)
+        {
+            break;
+        }
+    }
+}
+
+void InsertionSORT(int vet[], int tam)
+{
+    int i, j, temp;
+    // Se ordenado O(N), se não O(N^2)
+    for (i = 1; i < tam; i++)
+    {
+        temp = vet[i];
+        for (j = i - 1; j >= 0 && vet[j] > temp; j--)
+        {
+            vet[j + 1] = vet[j];
+        }
+        vet[j + 1] = temp;
+    }
+}
+
+void SelectionSort(int vet[], int t)
+{
+    int i, menor, indice, j;
+    for (i = 0; i < t - 1; i++)
+    {
+        // ACHA O MENOR ELEMENTO
+        menor = vet[i];
+        indice = i;
+        for (j = i; j < t; j++)
+        {
+            if (vet[j] < menor)
+            {
+                menor = vet[j];
+                indice = j;
+            }
+        }
+        // Troca o menor elemento com o i-ésimo elemento
+        vet[indice] = vet[i]; // o menor é vet[indice]
+        vet[i] = menor;
+    }
+}
+
+void shellsort(int v[], int t)
+{
+    int i, j, aux, h = 1;
+
+    while (h < t / 3)
+        h = 3 * h + 1;
+    while (h > 0)
+    {
+        for (i = h; i < t; i++)
+        {
+            aux = v[i];
+            j = i;
+
+            while (j >= h && aux < v[j - h])
+            {
+                v[j] = v[j - h];
+                j = j - h;
+            }
+            v[j] = aux;
+        }
+        h = (h - 1) / 3;
+    }
 }
