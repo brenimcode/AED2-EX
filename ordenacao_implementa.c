@@ -2,7 +2,56 @@
 #include <stdlib.h>
 #include "ordenacao.h"
 
+#define MAXN 10000
+
+typedef struct{
+    int vetor[MAXN];
+    int tamanho_reap;
+    int tamanho_vetor;
+}V;
+
 // EFICIENTES:
+
+max_heapify(V a,int i){
+        int dir,esq,maior;
+        if(esq <= a.tamanho_reap && a.vetor[esq] > a.vetor[i]){
+            maior = esq;
+        }
+        else{
+            maior = i;
+        }
+        if(dir <= a.tamanho_reap && a.vetor[dir] > a.vetor[maior]){
+            maior = dir;
+        }
+        if(maior != i){
+            troca(a.vetor[i], a.vetor[maior]);
+            max_heapify(a,maior);
+        }
+
+
+}
+
+void build_max_heap(V a){
+    a.tamanho_reap = a.tamanho_vetor;
+    int i;
+    for (i = a.tamanho_vetor/2; i >=1; i++)
+    {
+        max_heapify(a,i);
+    }
+    
+}
+
+void heapsort(V a, int N){
+    build_max_heap(a);
+    int i;
+    for (i = a.tamanho_vetor; i >= 2; i--)
+    {
+        troca(V[1], V[i]);
+        a.tamanho_reap--;
+        max_heapify(V,1);
+    }
+    
+}
 
 void merge(int *V,int aux_ordenado[],int esq,int meio, int dir){
     int esq_fim = meio-1;  // [ini_left] ... [esq_fim]  Topo é inileft
