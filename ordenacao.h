@@ -10,7 +10,10 @@
 */
 
 // QUICK SORT
-
+void troca(int *v, int a, int b);
+int particao(int vet[], int ini, int fim);
+void quicksort(int vet[], int ini, int fim);
+void QuickBasico(int vet[], int n);
 
 // MERGE SORT
 
