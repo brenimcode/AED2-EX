@@ -7,7 +7,7 @@
 
 */
 
-shellsort(int v[],int t){
+void shellsort(int v[],int t){
     int i,j,aux,h=1;
 
     while(h < t/3)
@@ -16,6 +16,7 @@ shellsort(int v[],int t){
         for(i=h;i<t;i++){
             aux = v[i];
             j=i;
+            printf("[i == %d, j == %d, h == %d]\n",i,j,h);
 
             while(j>=h && aux < v[j-h]){
                 v[j] = v[j-h];
@@ -36,6 +37,15 @@ int main(){
         printf("[%d] ",vet[i]);
     }
     printf("\n");
+
+    shellsort(vet,6);
+
+    for (i = 0; i < 6; i++)
+    {
+        printf("[%d] ",vet[i]);
+    }
+    printf("\n");
+
 
     return 0;
 }

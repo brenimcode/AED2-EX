@@ -33,7 +33,7 @@ void merge(int *V,int aux_ordenado[],int esq,int meio, int dir){
         aux_ordenado[i_aux] = V[esq];
         i_aux++;
         esq++;
-    }
+    } 
 
     for( i=0;i< tamanho; i++){
         V[dir] = aux_ordenado[dir];

@@ -59,8 +59,11 @@ void QuickBasico(int vet[], int n)
 }
 
 
-max_heapify(V a,int i){
+void max_heapify(V a,int i){
         int dir,esq,maior;
+        maior = i;
+        esq = 2*i;
+        dir = 2*i+1;
         if(esq <= a.tamanho_reap && a.vetor[esq] > a.vetor[i]){
             maior = esq;
         }
@@ -74,7 +77,7 @@ max_heapify(V a,int i){
             troca(a.vetor[i], a.vetor[maior]);
             max_heapify(a,maior);
         }
-
+        
 
 }
 
