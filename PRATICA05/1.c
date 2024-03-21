@@ -1,8 +1,9 @@
+//BRENO OLIVEIRA CAVALCANTE 12221BCC011
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_CEP 10
+#define MAX_CEP 585882
 
 typedef struct cep_s {
     char cep[9];
@@ -12,23 +13,29 @@ typedef struct cep_s {
 } cep_s;
 
 void shellsort(cep_s v[], int t) {
-    int i, j, h = 1;
+    int h = 1;
     cep_s aux;
 
+    // Calcula o valor inicial de h
     while (h < t / 3)
         h = 3 * h + 1;
-    while (h > 0) {
-        for (i = h; i < t; i++) {
-            aux = v[i];
-            j = i;
 
+    // Loop para cada intervalo de h
+    while (h > 0) {
+        // Insertion Sort modificado para intervalo h
+        for (int i = h; i < t; i++) {
+            aux = v[i];
+            int j = i;
+
+            // Desloca os elementos em intervalos de h
             while (j >= h && strcmp(aux.cep, v[j - h].cep) < 0) {
                 v[j] = v[j - h];
-                j = j - h;
+                j -= h;
             }
             v[j] = aux;
         }
-        h = (h - 1) / 3;
+        // Reduz o intervalo h
+        h /= 3;
     }
 }
 
@@ -42,9 +49,8 @@ cep_s criar_cep_nao_encontrado() {
 }
 
 cep_s busca_binaria(cep_s v[], int ini, int fim, char chave_busca[]) {
-    int meio;
     if (ini <= fim) {
-        meio = (ini + fim) / 2;
+        int meio = (ini + fim) / 2;
         if (strcmp(chave_busca, v[meio].cep) == 0)
             return v[meio];
         else if (strcmp(chave_busca, v[meio].cep) > 0)
@@ -55,46 +61,42 @@ cep_s busca_binaria(cep_s v[], int ini, int fim, char chave_busca[]) {
     return criar_cep_nao_encontrado();
 }
 
-int main(){
-
+int main() {
     FILE *arquivo = fopen("ceps.txt", "r");  // Modo de leitura
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return 1;
     }
-    int nmax = 10;
-    char cep[15],sigla[15],cidade[255],endereco[255];
 
+    int nmax = MAX_CEP;
+    //cep_s *vetor = malloc(nmax*sizeof(cep_s));
     cep_s vetor[nmax];
-
     int i = 0;
 
-    while(fscanf(arquivo, "%[^;]; %2[^;]; %[^;]; %[^\n]\n",cep,sigla,cidade,endereco) != EOF){
-        strcpy(vetor[i].cep,cep);
-        strcpy(vetor[i].cidade,cidade);
-        strcpy(vetor[i].estado,sigla);
-        strcpy(vetor[i].rua,endereco);
+    while (i < nmax && fscanf(arquivo, "%9[^;]; %2[^;]; %[^;]; %99[^\n]\n", vetor[i].cep, vetor[i].estado, vetor[i].cidade, vetor[i].rua) != EOF) {
         i++;
-        if(i == nmax) break;
     }
 
-            printf("Busca binaria\n");
-            char temp[10];
-            shellsort(vetor,nmax);
-            printf("Insira cep: ");
-            setbuf(stdin,NULL);
-            scanf("%s", temp);
-            cep_s aux = busca_binaria(vetor,0,nmax,temp);
-            if(strcmp(aux.cep,"-1 ")) {
-                printf("nao encontrado\n");
-            }
-            else{
-                printf("CEP: %s \nSigla: %s\nNome Cidade: %s \nEndereco: %s \n",aux.cep,aux.estado,aux.cidade,aux.rua);
+   
+printf("--------------\n");
+    shellsort(vetor, nmax);
+while (1) {
+        printf("Busca binaria INSIRA -1 PARA ENCERRAR O PROGRAMA.\n");
+        char temp[15];
+        printf("Insira cep: ");
+        fgets(temp, sizeof(temp), stdin);
+        temp[strcspn(temp, "\n")] = '\0'; // Remova o caractere de nova linha
+        if (strcmp(temp, "-1") == 0)
+            break;
+        cep_s aux = busca_binaria(vetor, 0, nmax, temp);
+        if (strcmp(aux.cep, "-1") == 0) {
+            printf("Não encontrado\n");
+        } else {
+            printf("CEP: %s\nSigla: %s\nNome Cidade: %s\nEndereco: %s\n", aux.cep, aux.estado, aux.cidade, aux.rua);
+        }
+    }
 
-            }
-
-
-    fclose(arquivo);  // Não esqueça de fechar o arquivo após a leitura
-
+    fclose(arquivo);
+    //free(vetor);
     return 0;
 }
