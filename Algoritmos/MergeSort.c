@@ -33,13 +33,13 @@ void merge(int *V,int aux_ordenado[],int esq,int meio, int dir){
         aux_ordenado[i_aux] = V[esq];
         i_aux++;
         esq++;
-    } 
+    }
 
     for( i=0;i< tamanho; i++){
         V[dir] = aux_ordenado[dir];
         dir--;
     }
-    
+
 }
 
 void mergeSort(int v[],int aux_ordenado[], int esq,int dir){
@@ -64,7 +64,7 @@ void m_sort(int* v, int n){
 int main(){
     int vet[6] = {6,5,4,3,2,1};
     int i;
-    m_sort(vet,6); //passa-se pos de ultimo elemento   
+    m_sort(vet,6); //passa-se pos de ultimo elemento
     for (i = 0; i < 6; i++)
     {
         printf("[%d] ",vet[i]);
