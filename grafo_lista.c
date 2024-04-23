@@ -57,7 +57,7 @@ void FGVazio(TipoGrafo *Grafo) {
     for (i = 0; i < Grafo->NumVertices; i++)
         FLVazia(&Grafo->Adj[i]);
 }
-
+/*
 void InsereAresta(TipoValorVertice *V1, TipoValorVertice *V2,
                   TipoPeso *Peso, TipoGrafo *Grafo) {
     TipoItem x;
@@ -65,6 +65,15 @@ void InsereAresta(TipoValorVertice *V1, TipoValorVertice *V2,
     x.Peso = *Peso;
     Insere(&x, &Grafo->Adj[*V1]);
 }
+*/
+void InsereAresta(TipoValorVertice V1, TipoValorVertice V2,
+                  TipoPeso Peso, TipoGrafo *Grafo) {
+    TipoItem x;
+    x.Vertice = V2;
+    x.Peso = Peso;
+    Insere(&x, &Grafo->Adj[V1]);
+}
+
 
 short ExisteAresta(TipoValorVertice Vertice1,
                    TipoValorVertice Vertice2, TipoGrafo *Grafo) {
@@ -213,16 +222,20 @@ int main(int argc, char *argv[]) {
 
     for (i = 0; i < NArestas; i++) {
         printf("Insere V1 -- V2 -- Peso:");
-        scanf("%d%d%d%*[^\n]", &V1, &V2, &Peso);
+        scanf("%d%d%*[^\n]", &V1, &V2);
         getchar();
+        Peso = 0;
         Grafo.NumArestas++;
-        InsereAresta(&V1, &V2, &Peso, &Grafo);   /* 1 chamada g-direcionado    */
+        InsereAresta(V1, V2,Peso, &Grafo);   /* 1 chamada g-direcionado    */
         /*InsereAresta(V2, V1, Peso, Grafo);*/
         /* 2 chamadas g-naodirecionado*/
     }
     ImprimeGrafo(&Grafo);
     scanf("%*[^\n]");
     getchar();
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------
     printf("Grafo transposto:\n");
     GrafoTransposto(&Grafo, &GrafoT);
     ImprimeGrafo(&GrafoT);

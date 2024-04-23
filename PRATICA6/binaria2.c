@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+int contaNo(Apontador* p) {
+    if (*p == NULL)
+        return 0;
+    return 1 + contaNo(&(*p)->Esq) + contaNo(&(*p)->Dir);
+}
+
 
 typedef int TipoChave;
 typedef struct Registro

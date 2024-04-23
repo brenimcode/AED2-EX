@@ -42,6 +42,9 @@ void quicksort(int vet[], int ini, int fim)
     }
 }
 
+
+
+
 void QuickBasico(int vet[], int n)
 {
     quicksort(vet, 0, n - 1);

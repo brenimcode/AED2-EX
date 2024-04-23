@@ -2,27 +2,38 @@
 
 using namespace std;
 
-#define MAXN 10
+double senox(double x) {
+    // Convertendo graus para radianos
+    double radianos = x * M_PI / 180.0;
+
+    double termo = radianos; // Inicializa o primeiro termo da série como x
+    double resultado = termo; // Inicializa o resultado como o primeiro termo da série
+    int k = 1;
+    const double precisao = 0.00001;
+	double coisa = -1.0 * radianos * radianos;
+    // Soma os termos da série até que o valor absoluto de um termo seja menor que a precisão
+    while (abs(termo) >= precisao) {
+        // Calcula o próximo termo da série
+        termo *= coisa / ((2 * k) * (2 * k + 1));
+        
+        // Adiciona o próximo termo ao resultado
+        resultado += termo;
+
+        // Incrementa o contador k
+        k++;
+    }
+
+    return resultado;
+}
+
+int main() {
+    double angulo;
+    cout << "Digite o valor do angulo em graus: ";
+    cin >> angulo;
+    double x;
+    // Calcula e exibe o seno do ângulo
+    cout << "O seno de " << angulo << " graus eh: " << senox(angulo) << endl;
 
 
-int v[MAXN], p[MAXN], n, C;
-
-int brute(vector<int> atual, int i) {
-	// se chegamos ao fim realiso a operação que queremos checar e retorno o valor
-	if(i == n+1) {
-		// as funções peso e valor não são explicitadas para evitar poluir o código
-		// porém calculam exatamente o que o nome de cada uma indica
-		if(peso(atual) <= C) return valor(atual);
-		return 0; // o conjunto não é valido logo dizemos que seu valor é 0
-	}
-	// senao tenho um item para considerar, o qual posso adicionar ou não ao meu conjunto
-	
-	// não adiciono o item atual ao meu conjunto
-	int ans = brute(atual, i+1);
-	
-	// adiciono o item atual ao meu conjunto
-	atual.push_back(i);
-	ans = max(ans, brute(atual, i+1));
-	
-	return ans;
+    return 0;
 }
